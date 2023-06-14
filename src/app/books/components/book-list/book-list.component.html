@@ -1,0 +1,116 @@
+<div class="row m-1">
+  <!--Buscador-->
+  <div class="col-6">
+    <input type="search"  [(ngModel)]="title"  (keyup)="onSearch()" class="form-control" placeholder="Buscar por titulo">
+  </div>
+
+  <!--Boton para abrir la ventana modal-->
+  <div class="col-6 text-end">
+    <button type="button" class=" btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"> <i class="fa-regular fa-folder-open"></i> </button>
+  
+  </div>
+
+</div>
+
+
+<div class="row row-cols-1 row-cols-md-4 g-4 m-1">
+
+    <div class="col" *ngFor="let book of books">
+      <div class="card h-100">
+        <img src="{{book.image}}" class="card-img-top" width="400" height="350px" >
+        <div class="card-body">
+          <h5 class="card-title">{{book.title}}</h5>
+          <p class="card-text">{{book.description.substr(0,100)}}...</p>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button type="button" (click)="onEdit(book)" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo"
+           class="btn btn-outline-primary"><i class="fa-regular fa-pen-to-square"></i></button>
+          <button type="button" (click)="onDelete(book.id)" class="btn btn-outline-danger"><i class="fa-regular fa-trash-can"></i></button>
+          <button type="button" class="btn btn-outline-success"><i class="fa-solid fa-cart-shopping"></i></button>
+    
+        </div>
+      </div>
+
+    </div>
+
+
+
+<!--Ventana modal para los input text-->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo libro</h1>
+        <button type="button" id="btn-close"  class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+          <div class="col-6 mb-3">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" formControlName="title" id="title" class="form-control">
+          </div>
+          <div class="col-6 mb-3">
+            <label for="description" class="col-form-label">Description:</label>
+            <input type="text" formControlName="description" id="description" class="form-control">
+          </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label for="category" class="col-form-label">Category:</label>
+              <input type="text" formControlName="category" id="category" class="form-control">
+            </div>
+            <div class="col-6 mb-3">
+              <label for="price" class="col-form-label">Price:</label>
+              <input type="number" formControlName="price" id="price" class="form-control">
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label for="isbn" class="col-form-label">Isbn:</label>
+                <input type="text" formControlName="isbn" id="isbn" class="form-control">
+              </div>
+              <div class="col-6 mb-3">
+                <label for="pages" class="col-form-label">Pages:</label>
+                <input type="number" formControlName="pages" id="pages" class="form-control">
+              </div>
+              </div>
+
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <label for="publication_date" class="col-form-label">Publication_date:</label>
+                  <input type="date" formControlName="publication_date" id="publication_date" class="form-control">
+                </div>
+                <div class="col-6 mb-3">
+                  <label for="image" class="col-form-label">Image:</label>
+                  <input type="text" formControlName="image" id="image" class="form-control">
+                </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-6 mb-3" formGroupName="author">
+                    <label for="Author" class="col-form-label">Author:</label>
+                    <select formControlName="id" class="form-select">
+                      <option value="">Seleccione una opcion</option>
+                      <option *ngFor="let author of authors" value="{{author.id}}"> {{author.name}}</option>
+                    </select>
+                  </div>
+                  </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="Submit"  class="btn btn-primary" [disabled]="!form.valid">Save</button>
+          </div>
+         
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!--Fin ventana modal form book--> 
+    
